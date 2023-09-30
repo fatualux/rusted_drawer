@@ -19,7 +19,7 @@ const APPS: [App; 15] = [
     App { name: "Polymath", path: "polymath.sh" },
     App { name: "Downloader", path: "downloader.sh" },
     App { name: "TTS", path: "tts.sh" },
-    App { name: "ComfyUI", path: "comfyui.sh" },
+    App { name: "ComfyUI", path: "comfyUI.sh" },
     App { name: "Riffusion", path: "riffusion.sh" },
     App { name: "Background remover", path: "bgRemover.sh" },
     App { name: "Images to video", path: "img2vid.sh" },
