@@ -1,12 +1,13 @@
 use gtk::prelude::*;
-use gtk::{Button, Container, Grid, Window, WindowType};
+use gtk::{Button, Grid, Entry, EntryExt, Window, WindowType};
 
 struct App {
     name: &'static str,
     path: &'static str,
 }
 
-const SCRIPTS_DIR: &str = "/home/fz/.scripts";
+const SCRIPTS_DIR: &str = "apps/";
+
 
 const APPS: [App; 15] = [
     App { name: "Alarm", path: "alarm.sh" },
@@ -20,11 +21,12 @@ const APPS: [App; 15] = [
     App { name: "TTS", path: "tts.sh" },
     App { name: "ComfyUI", path: "comfyui.sh" },
     App { name: "Riffusion", path: "riffusion.sh" },
-    App { name: "Background remover", path: "bgremover.sh" },
+    App { name: "Background remover", path: "bgRemover.sh" },
     App { name: "Images to video", path: "img2vid.sh" },
     App { name: "Remove Duplicates", path: "rmDuplicate.sh" },
-    App { name: "Activate Virtual Environment", path: "vactivate.sh" },
+    App { name: "Virtualenv activate", path: "vactivate.sh" },
 ];
+
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK.");
@@ -33,6 +35,9 @@ fn main() {
     window.set_title("App Drawer");
     window.set_default_size(400, 300);
 
+    let search_entry = Entry::new();
+    let search_button = Button::with_label("Search");
+  
     let grid = Grid::new();
     grid.set_column_homogeneous(true);
     grid.set_row_spacing(10);
@@ -44,7 +49,7 @@ fn main() {
     for app in APPS.iter() {
         let button = Button::with_label(app.name);
         button.connect_clicked(move |_| {
-            let path = app.path;
+            let path = format!("{}{}", SCRIPTS_DIR, app.path);
             let _ = std::process::Command::new("sh")
                 .arg(path)
                 .spawn()
@@ -60,7 +65,18 @@ fn main() {
         }
     }
 
-    window.add(&grid);
+    let main_box = gtk::Box::new(gtk::Orientation::Vertical, 0);
+    main_box.pack_start(&search_entry, false, false, 0);
+    main_box.pack_start(&search_button, false, false, 0);
+    main_box.pack_start(&grid, true, true, 0);
+
+    window.add(&main_box);
+
+    // Add search functionality
+    search_entry.connect_changed(move |entry| {
+        let search_text = entry.get_text().to_string();
+        search_apps(&search_text, &grid);
+    });
 
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
@@ -70,4 +86,37 @@ fn main() {
     window.show_all();
 
     gtk::main();
+}
+
+fn search_apps(search_text: &str, grid: &Grid) {
+    // Remove all existing buttons from the grid
+    grid.foreach(|child| {
+        grid.remove(child);
+    });
+
+    let mut row = 0;
+    let mut column = 0;
+
+    for app in APPS.iter() {
+        if app.name.to_lowercase().contains(&search_text.to_lowercase()) {
+            let button = Button::with_label(app.name);
+            button.connect_clicked(move |_| {
+                let path = format!("{}{}", SCRIPTS_DIR, app.path);
+                let _ = std::process::Command::new("sh")
+                    .arg(path)
+                    .spawn()
+                    .expect("Failed to launch app");
+            });
+
+            grid.attach(&button, column, row, 1, 1);
+
+            column += 1;
+            if column == 5 {
+                column = 0;
+                row += 1;
+            }
+        }
+    }
+
+    grid.show_all();
 }
