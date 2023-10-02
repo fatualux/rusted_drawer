@@ -2,6 +2,8 @@ use gtk::prelude::*;
 use gtk::{Button, Grid, Entry, Window, WindowType};
 use std::process::Command;
 use std::env;
+use std::rc::Rc;
+use std::cell::RefCell;
 
 struct App {
     name: &'static str,
@@ -10,7 +12,7 @@ struct App {
 }
 
 const APPS: [App; 15] = [
-    App { name: "Alarm", path: "rusted_alarm", command: "./" },
+    App { name: "Alarm", path: "rustedalarm", command: "./" },
     App { name: "Whisper", path: "whisper.sh", command: "sh" },
     App { name: "Realtime Transcription", path: "realtimeWhisper.sh", command: "sh" },
     App { name: "Tesseract OCR", path: "tesseract.sh", command: "sh" },
@@ -27,11 +29,26 @@ const APPS: [App; 15] = [
     App { name: "Virtualenv activate", path: "vactivate.sh", command: "sh" },
 ];
 
+fn launch_app(app: &App, project_dir: &std::path::PathBuf) {
+    let script_path = project_dir.join(app.path);
+
+    let output = Command::new(app.command)
+        .arg(&script_path)
+        .current_dir(&project_dir)
+        .output()
+        .expect("Failed to launch app");
+
+    if !output.status.success() {
+        let error_message = String::from_utf8_lossy(&output.stderr);
+        eprintln!("Failed to launch app {}: {}", app.name, error_message);
+    }
+}
+
 fn main() {
     gtk::init().expect("Failed to initialize GTK.");
 
     let current_dir = env::current_dir().expect("Failed to get current directory");
-    let project_dir = current_dir.join(".scripts");
+    let project_dir = Rc::new(RefCell::new(current_dir.join(".scripts")));
 
     let window = Window::new(WindowType::Toplevel);
     window.set_title("App Drawer");
@@ -46,14 +63,13 @@ fn main() {
     grid.set_column_spacing(10);
 
     for (i, app) in APPS.iter().enumerate() {
-        let script_path = project_dir.join(app.path);
         let button = Button::with_label(app.name);
 
+        let project_dir_clone = Rc::clone(&project_dir);
+        let app_clone = app.clone();
         button.connect_clicked(move |_| {
-            let _ = Command::new(app.command)
-                .arg(&script_path)
-                .spawn()
-                .expect("Failed to launch app");
+            let project_dir = project_dir_clone.borrow();
+            launch_app(&app_clone, &project_dir);
         });
 
         grid.attach(&button, (i % 5) as i32, (i / 5) as i32, 1, 1);
