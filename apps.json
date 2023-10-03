@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Alarm",
+    "path": "alarm.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Whisper",
+    "path": "whisper.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Realtime Transcription",
+    "path": "realtimeWhisper.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Tesseract OCR",
+    "path": "tesseract.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Translator",
+    "path": "argos.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Converter",
+    "path": "converter.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Polymath",
+    "path": "polymath.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Downloader",
+    "path": "downloader.sh",
+    "command": "sh"
+  },
+  {
+    "name": "TTS",
+    "path": "tts.sh",
+    "command": "sh"
+  },
+  {
+    "name": "ComfyUI",
+    "path": "comfyUI.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Riffusion",
+    "path": "riffusion.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Background remover",
+    "path": "bgRemover.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Images to video",
+    "path": "img2vid.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Remove Duplicates",
+    "path": "rmDuplicate.sh",
+    "command": "sh"
+  },
+  {
+    "name": "Virtualenv activate",
+    "path": "vactivate.sh",
+    "command": "./"
+  }
+]

@@ -1,31 +1,19 @@
 use gtk::prelude::*;
 use gtk::{Button, Grid, Entry, EntryExt, Window, WindowType};
+use serde::Deserialize;
+use std::sync::Arc;
 
+#[derive(Deserialize, Clone)]
 struct App {
-    name: &'static str,
-    path: &'static str,
-    command: &'static str,
+    name: String,
+    path: String,
+    command: String,
 }
 
 const SCRIPTS_DIR: &str = "";
 
-const APPS: [App; 15] = [
-    App { name: "Alarm", path: "alarm.sh", command: "sh" },
-    App { name: "Whisper", path: "whisper.sh", command: "sh" },
-    App { name: "Realtime Transcription", path: "realtimeWhisper.sh", command: "sh" },
-    App { name: "Tesseract OCR", path: "tesseract.sh", command: "sh" },
-    App { name: "Translator", path: "argos.sh", command: "sh" },
-    App { name: "Converter", path: "converter.sh", command: "sh" },
-    App { name: "Polymath", path: "polymath.sh", command: "sh" },
-    App { name: "Downloader", path: "downloader.sh", command: "sh" },
-    App { name: "TTS", path: "tts.sh", command: "sh" },
-    App { name: "ComfyUI", path: "comfyUI.sh", command: "sh" },
-    App { name: "Riffusion", path: "riffusion.sh", command: "sh" },
-    App { name: "Background remover", path: "bgRemover.sh", command: "sh" },
-    App { name: "Images to video", path: "img2vid.sh", command: "sh" },
-    App { name: "Remove Duplicates", path: "rmDuplicate.sh", command: "sh" },
-    App { name: "Virtualenv activate", path: "vactivate.sh", command: "./" },
-];
+use std::fs::File;
+use std::io::Read;
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK.");
@@ -36,7 +24,7 @@ fn main() {
 
     let search_entry = Entry::new();
     let search_button = Button::with_label("Search");
-  
+
     let grid = Grid::new();
     grid.set_column_homogeneous(true);
     grid.set_row_spacing(10);
@@ -45,11 +33,20 @@ fn main() {
     let mut row = 0;
     let mut column = 0;
 
-    for app in APPS.iter() {
-        let button = Button::with_label(app.name);
+    // Load the apps from the JSON file
+    let mut apps_json = String::new();
+    File::open(".scripts/apps.json")
+        .and_then(|mut file| file.read_to_string(&mut apps_json))
+        .expect("Failed to read apps.json");
+
+// Parse the JSON into a vector of App
+let apps: Arc<Vec<App>> = Arc::new(serde_json::from_str(&apps_json).expect("Failed to parse apps.json"));
+
+    for app in apps.iter().cloned() {
+        let button = Button::with_label(&app.name);
         button.connect_clicked(move |_| {
             let path = format!("{}{}", SCRIPTS_DIR, app.path);
-            let _ = std::process::Command::new(app.command)
+            let _ = std::process::Command::new(&app.command)
                 .arg(path)
                 .spawn()
                 .expect("Failed to launch app");
@@ -74,7 +71,7 @@ fn main() {
     // Add search functionality
     search_entry.connect_changed(move |entry| {
         let search_text = entry.get_text().to_string();
-        search_apps(&search_text, &grid);
+        search_apps(&search_text, &grid, &apps);
     });
 
     window.connect_delete_event(|_, _| {
@@ -87,7 +84,7 @@ fn main() {
     gtk::main();
 }
 
-fn search_apps(search_text: &str, grid: &Grid) {
+fn search_apps(search_text: &str, grid: &Grid, apps: &Arc<Vec<App>>) {
     // Remove all existing buttons from the grid
     grid.foreach(|child| {
         grid.remove(child);
@@ -96,12 +93,12 @@ fn search_apps(search_text: &str, grid: &Grid) {
     let mut row = 0;
     let mut column = 0;
 
-    for app in APPS.iter() {
+    for app in apps.iter().cloned() {
         if app.name.to_lowercase().contains(&search_text.to_lowercase()) {
-            let button = Button::with_label(app.name);
+            let button = Button::with_label(&app.name);
             button.connect_clicked(move |_| {
                 let path = format!("{}{}", SCRIPTS_DIR, app.path);
-                let _ = std::process::Command::new("sh")
+                let _ = std::process::Command::new(&app.command)
                     .arg(path)
                     .spawn()
                     .expect("Failed to launch app");
