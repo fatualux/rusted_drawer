@@ -1,8 +1,8 @@
 [
   {
     "name": "Alarm",
-    "path": "alarm.sh",
-    "command": "sh"
+    "path": "rustedalarm",
+    "command": "./"
   },
   {
     "name": "Whisper",
