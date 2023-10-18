@@ -8,6 +8,8 @@ Plus, I need a GUI to launch the applications I keep in my Python virtual enviro
 
 Till now, I have been using a launcher I wrote, based on bash and zenity, but now I'd like to learn something else.
 
+[![Watch the video](demo/untitled.mp4)
+
 If you have suggestions or ideas, please let me know.
 
 **INSTALL**
@@ -20,6 +22,10 @@ Simply clone this repository, then move into the directory and run:
 You can change the file *apps.json*, according to your needs.
 
 The apps/scripts thet the launcher starts must be placed in a directory named **.scripts**.
+
+![image info](demo/photo_2023-10-18_16-02-38.jpg)
+![image info](demo/photo_2023-10-18_16-07-09.jpg)
+![image info](demo/photo_2023-10-18_16-07-13.jpg)
 
  ***Acknowledgements***
 
