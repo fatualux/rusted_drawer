@@ -23,9 +23,14 @@ You can change the file *apps.json*, according to your needs.
 
 The apps/scripts thet the launcher starts must be placed in a directory named **.scripts**.
 
-![image info](demo/photo_2023-10-18_16-02-38.jpg)
-![image info](demo/photo_2023-10-18_16-07-09.jpg)
-![image info](demo/photo_2023-10-18_16-07-13.jpg)
+***Old version:***
+
+![image info](demo/old_version.jpg)
+
+***New version:***
+![image info](demo/new_1.jpg)
+![image info](demo/new_2.jpg)
+![image info](demo/new_3.jpg)
 
  ***Acknowledgements***
 
