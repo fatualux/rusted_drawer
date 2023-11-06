@@ -33,3 +33,6 @@ Special thanks to the Codeium engineering team for their assistance and support 
 
 - [@codeium-assistant](https://github.com/codeium-assistant) - The AI assistant from Codeium that helped answer code-related questions.
 - [Codeium](https://codeium.com/) - The AI company that developed the assistant, providing code autocomplete, search, and chat-based assistance.
+
+
+This project was also  made possible with the assistance of [GPT-3](https://openai.com/gpt-3) developed by OpenAI and its talented team of developers.
