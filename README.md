@@ -6,7 +6,7 @@ I DON'T KNOW RUST, but I would like to learn something about.
 
 Plus, I need a GUI to launch the applications I keep in my Python virtual environment, my scripts, and so on.
 
-Till now, I have been using a launcher I wrote, based on bash and zenity, but now I'd like to learn something else.
+Till now, I have been using a launcher I wrote, based on bash and zenity, but now I'd like to try something else.
 
 [![Watch the video](demo/untitled.mp4)
 
