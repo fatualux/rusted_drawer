@@ -35,7 +35,7 @@ fn main() {
 
     // Load the apps from the JSON file
     let mut apps_json = String::new();
-    File::open(".scripts/apps.json")
+    File::open("Apps/apps.json")
         .and_then(|mut file| file.read_to_string(&mut apps_json))
         .expect("Failed to read apps.json");
 
