@@ -28,6 +28,7 @@ The apps/scripts started by the launcher must be placed in a directory named **.
 ![image info](demo/old_version.jpg)
 
 ***New version:***
+
 ![image info](demo/new_1.jpg)
 ![image info](demo/new_2.jpg)
 ![image info](demo/new_3.jpg)
