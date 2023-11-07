@@ -2,7 +2,7 @@
 
 **RUSTED DRAWER**
 
-I DON'T KNOW RUST, but I would like to leatn something about.
+I DON'T KNOW RUST, but I would like to learn something about.
 
 Plus, I need a GUI to launch the applications I keep in my Python virtual environment, my scripts, and so on.
 
