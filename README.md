@@ -21,7 +21,7 @@ Simply clone this repository, then move into the directory and run:
 
 You can change the file *apps.json*, according to your needs.
 
-The apps/scripts started by the launcher must be placed in a directory named **.scripts**.
+The apps/scripts started by the launcher must be placed in a directory named **Apps**.
 
 ***Old version:***
 
