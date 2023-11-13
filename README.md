@@ -31,7 +31,6 @@ The apps/scripts started by the launcher must be placed in a directory named **A
 ![image info](demo/new_2.jpg)
 ![image info](demo/new_3.jpg)
 
-***Logic:***
 
 ## Example Code
 
@@ -71,8 +70,9 @@ fn main() {
 fn search_apps(search_text: &str, vertical_box: &Box, apps: &Arc<Vec<App>>) {
     // Search functionality code...
 }
+```
 
- ***Acknowledgements***
+***Acknowledgements***
 
 Special thanks to the Codeium engineering team for their assistance and support in developing this project. Their AI-powered assistant has been instrumental in providing quick and accurate coding help.
 
