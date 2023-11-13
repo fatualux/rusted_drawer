@@ -71,6 +71,22 @@ fn search_apps(search_text: &str, vertical_box: &Box, apps: &Arc<Vec<App>>) {
     // Search functionality code...
 }
 ```
+**Logic:**
+
+1. The app initializes the GTK library using `gtk::init()`.
+2. It creates a new GTK window with the title "App Drawer" and a default size of 200x300 pixels.
+3. The app creates an entry field and a search button for searching applications.
+4. It creates a scrolled window to contain a vertical box that will hold the application buttons.
+5. The app loads the applications from a JSON file named "apps.json" located in the "Apps" directory.
+6. It parses the JSON file into a vector of `App` structs using serde.
+7. The app iterates over each application in the vector and creates a button for each application.
+8. For each button, a click event handler is attached that launches the associated application when clicked.
+9. The buttons are packed into the vertical box.
+10. The vertical box is added to the scrolled window.
+11. The search functionality is implemented by connecting the `changed` signal of the search entry field.
+12. When the search text changes, the app filters the applications based on the search text and updates the buttons in the vertical box accordingly.
+13. The window is shown and the GTK main event loop is started using `gtk::main()`.
+14. When the window is closed, the app quits the GTK main event loop.
 
 ***Acknowledgements***
 
