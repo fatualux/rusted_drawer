@@ -2,15 +2,13 @@
 
 **RUSTED DRAWER**
 
-I DON'T KNOW RUST, but I would like to learn something about.
+I DON'T KNOW RUST, I have just started learning.
 
-Plus, I need a GUI to launch the applications I keep in my Python virtual environment, my scripts, and so on.
-
-Till now, I have been using a launcher I wrote, based on bash and zenity, but now I'd like to try something else.
+I needied a GUI to launch the applications I keep in my Python virtual environments, my scripts, and so on; till now, I have been using a launcher I wrote, based on bash and zenity, but I wanted to try a different approach.
 
 [![Watch the video](demo/untitled.mp4)
 
-If you have suggestions or ideas, please let me know.
+If you have suggestions or ideas, please let me know, by opening an issue.
 
 **INSTALL**
 
@@ -32,6 +30,47 @@ The apps/scripts started by the launcher must be placed in a directory named **A
 ![image info](demo/new_1.jpg)
 ![image info](demo/new_2.jpg)
 ![image info](demo/new_3.jpg)
+
+***Logic:***
+
+## Example Code
+
+Below is an example of the main.rs logic from the codebase:
+
+```rust
+use gtk::prelude::*;
+use gtk::{Button, Box, Entry, EntryExt, Window, WindowType, ScrolledWindow};
+use serde::Deserialize;
+use std::sync::Arc;
+use gtk::Adjustment;
+
+#[derive(Deserialize, Clone)]
+struct App {
+    name: String,
+    path: String,
+    command: String,
+}
+
+// Rest of the code...
+
+fn main() {
+    // Initialization and window setup code...
+
+    // Load the apps from the JSON file
+    let mut apps_json = String::new();
+    File::open("Apps/apps.json")
+        .and_then(|mut file| file.read_to_string(&mut apps_json))
+        .expect("Failed to read apps.json");
+
+    // Parse the JSON into a vector of App
+    let apps: Arc<Vec<App>> = Arc::new(serde_json::from_str(&apps_json).expect("Failed to parse apps.json"));
+
+    // Rest of the code...
+}
+
+fn search_apps(search_text: &str, vertical_box: &Box, apps: &Arc<Vec<App>>) {
+    // Search functionality code...
+}
 
  ***Acknowledgements***
 
